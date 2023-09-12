@@ -7,6 +7,7 @@
 import logging
 
 import ops
+from charms.nginx_ingress_integrator.v0.nginx_route import require_nginx_route
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +21,16 @@ class ConfigurableNginxCharm(ops.CharmBase):
         self._nginx_container = self.unit.get_container("nginx")
 
         self.framework.observe(self.on.nginx_pebble_ready, self._on_nginx_pebble_ready)
+
+        self._setup_ingress()
+
+    def _setup_ingress(self):
+        require_nginx_route(
+            charm=self,
+            service_hostname=self.app.name,
+            service_name=self.app.name,
+            service_port=80,
+        )
 
     def _on_nginx_pebble_ready(self, event: ops.PebbleReadyEvent):
         """Handle Nginx pebble-ready event."""

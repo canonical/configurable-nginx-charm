@@ -7,13 +7,17 @@ summary: An Nginx charm that can take a nginx.conf
 description: |
   An Nginx charm that can take a nginx.conf.
 
-  This is not a replacement for `nginx-ingress-integrator`. Instead this charm just runs an nginx container and allows you to push a nginx.conf file to it.
+  This is not a replacement for `nginx-ingress-integrator`. Instead this charm just runs an nginx container and allows you to push a nginx.conf file to it. It's meant to work with `nginx-ingress-integrator` as it's ingress.
 
   An example usage for this charm is to setup a proxy that points forwards requests from one url to another. Although to receive the requests from the first url you will need to setup some kind of ingress.
 
 containers:
   nginx:
     resource: nginx-image
+
+requires:
+  nginx-route:
+    interface: nginx-route
 
 resources:
   nginx-image:
