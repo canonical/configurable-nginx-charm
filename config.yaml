@@ -1,0 +1,5 @@
+options:
+  nginx_config:
+    default: ""
+    description: The nginx configuration to push into nginx container
+    type: string
